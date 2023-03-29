@@ -1,5 +1,6 @@
 [update_manager neopixel_fix]
 type: git_repo
+channel: dev
 path: ~/klipper_neopixel_fix
 origin: https://github.com/viappidu/klipper_neopixel_fix.git
 is_system_service: False
