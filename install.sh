@@ -51,12 +51,11 @@ check_folders()
 }
 
 # Link extension to Klipper
-link_extension()
+replace_value()
 {
     echo -n "Replacing BIT_MAX_TIME value in neopixel.py... "
     sed -i "/BIT_MAX_TIME=/c\BIT_MAX_TIME=.000030 #.000004" "${KLIPPER_PATH}/klippy/extras/neopixel.py"
     echo "[OK]"
-    restart_klipper
 }
 
 # Restart moonraker
@@ -67,12 +66,12 @@ restart_moonraker()
     echo "[OK]"
 }
 
-# Add updater for gcode_encoder to moonraker.conf
+# Add updater for neopixel_fix to moonraker.conf
 add_updater()
 {
     echo -e -n "Adding update manager to moonraker.conf... "
 
-    update_section=$(grep -c '\[update_manager gcode_encoder\]' ${MOONRAKER_CONFIG_DIR}/moonraker.conf || true)
+    update_section=$(grep -c '\[update_manager neopixel_fix\]' ${MOONRAKER_CONFIG_DIR}/moonraker.conf || true)
     if [ "${update_section}" -eq 0 ]; then
         echo -e "\n" >> ${MOONRAKER_CONFIG_DIR}/moonraker.conf
         while read -r line; do
@@ -82,7 +81,7 @@ add_updater()
         echo "[OK]"
         restart_moonraker
         else
-        echo -e "[update_manager gcode_encoder] already exists in moonraker.conf [SKIPPED]"
+        echo -e "[update_manager neopixel_fix] already exists in moonraker.conf [SKIPPED]"
     fi
 }
 
@@ -112,7 +111,6 @@ uninstall()
     echo -n "Restoring original value in Neopixel.py... "
     sed -i "/BIT_MAX_TIME=/c\BIT_MAX_TIME=.000004" "${KLIPPER_PATH}/klippy/extras/neopixel.py"
     echo "[OK]"
-    restart_klipper
     echo "You can now remove the [update_manager gcode_encoder] section in your moonraker.conf and delete this directory. Also remove all gcode_encoder configurations from your Klipper configuration."
 }
 
@@ -131,7 +129,7 @@ check_klipper
 check_folders
 stop_klipper
 if [ ! $UNINSTALL ]; then
-    link_extension
+    replace_value
     add_updater
 else
     uninstall
