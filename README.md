@@ -1,3 +1,1 @@
-# klipper_gcode_encoder
-# klipper_gcode_encoder
-# klipper_neopixel_fix
+Klipper_neopixel_fix
