@@ -1,0 +1,4 @@
+[update_manager neopixel_fix]
+type: git_repo
+path: ~/klipper_gcode_encoder
+origin: https://github.com/viappidu/klipper_neopixel_fix.git
